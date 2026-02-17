@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "347884448747",
+    "project_id": "proyecto-moviles-pelicula",
+    "storage_bucket": "proyecto-moviles-pelicula.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:347884448747:android:7639d1d7138218454607ae",
+        "android_client_info": {
+          "package_name": "com.example.peliculaseim"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJCHGqDxi7FmEZSZ7zSYDTD6Mnj4m7zck"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

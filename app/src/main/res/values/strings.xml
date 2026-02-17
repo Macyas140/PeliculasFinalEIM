@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">PeliculasEIM</string>
+    <string name="Usuario">Introduce Tu correo</string>
+    <string name="Contraseña">Introduce Tu Contraseña</string>
+    <string name="Submit">Enviar</string>
+    <string name="hint1">Gmail</string>
+    <string name="hint2">Password</string>
+    <string name="add">Agregar peliculas</string>
+</resources>
