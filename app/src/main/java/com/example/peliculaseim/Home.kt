@@ -7,12 +7,16 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
+import android.widget.ImageButton
+import android.widget.ListView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
@@ -45,6 +49,23 @@ class Home : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
+        val listView = findViewById<ListView>(R.id.lista)
+        listView.setOnItemClickListener{
+            parent, view, position, id ->
+            Toast.makeText(this,peliculas[position].nombre.toString(), Toast.LENGTH_LONG).show()
+        }
+
+        val agregaPeliculas = findViewById<FloatingActionButton>(R.id.agregaPeliculas)
+        agregaPeliculas.setOnClickListener {
+           val pelicula = Pelicula("nombre","genero", "anio")
+            myRef.push().setValue(pelicula).addOnCompleteListener {
+                task ->
+                if(task.isSuccessful){
+                    Toast.makeText(this,"pelicula agregada", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+
         /*val signout = findViewById<Button>(R.id.signout)
         val saludo = findViewById<TextView>(R.id.saludo)
         saludo.text= saludo.text.toString() + extras?.getCharSequence("email").toString()
@@ -68,6 +89,7 @@ class Home : AppCompatActivity() {
                     var pelicula = Peliculas(unit.child("nombre").value.toString(),unit.child("anio").value.toString(),unit.child("genero").value.toString(),unit.key.toString())
                     peliculas.add(pelicula)
                 }
+                llenarListview()
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -75,6 +97,11 @@ class Home : AppCompatActivity() {
             }
 
         })
+    }
+    fun llenarListview() {
+        val lista = findViewById<ListView>(R.id.lista)
+        val adaptador = PeliAdapter(this,peliculas)
+        lista.adapter = adaptador
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
