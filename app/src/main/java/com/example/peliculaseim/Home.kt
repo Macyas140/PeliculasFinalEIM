@@ -52,18 +52,20 @@ class Home : AppCompatActivity() {
         val listView = findViewById<ListView>(R.id.lista)
         listView.setOnItemClickListener{
             parent, view, position, id ->
-            Toast.makeText(this,peliculas[position].nombre.toString(), Toast.LENGTH_LONG).show()
+            val intent = Intent(this, Detalle::class.java)
+
+            intent.putExtra("nombre", peliculas[position].nombre)
+            intent.putExtra("genero", peliculas[position].genero)
+            intent.putExtra("anio", peliculas[position].anio)
+            intent.putExtra("id", peliculas[position].id)
+
+            startActivity(intent)
         }
 
         val agregaPeliculas = findViewById<FloatingActionButton>(R.id.agregaPeliculas)
         agregaPeliculas.setOnClickListener {
-           val pelicula = Pelicula("nombre","genero", "anio")
-            myRef.push().setValue(pelicula).addOnCompleteListener {
-                task ->
-                if(task.isSuccessful){
-                    Toast.makeText(this,"pelicula agregada", Toast.LENGTH_LONG).show()
-                }
-            }
+            val intent = Intent(this, Agregar::class.java)
+            startActivityForResult(intent, 200)
         }
 
         /*val signout = findViewById<Button>(R.id.signout)
@@ -102,6 +104,25 @@ class Home : AppCompatActivity() {
         val lista = findViewById<ListView>(R.id.lista)
         val adaptador = PeliAdapter(this,peliculas)
         lista.adapter = adaptador
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == 200 && resultCode == RESULT_OK) {
+
+            val nombre = data?.getStringExtra("nombre")
+            val genero = data?.getStringExtra("genero")
+            val anio = data?.getStringExtra("anio")
+
+            val pelicula = Peliculas(nombre, anio, genero, "")
+
+            myRef.push().setValue(pelicula).addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Toast.makeText(this, "Película agregada correctamente", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
